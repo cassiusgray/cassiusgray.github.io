@@ -36,14 +36,6 @@
         .tab-content {
             padding-top: 20px;
         }
-        .score-detail {
-            cursor: pointer;
-            color: #1a5f2a;
-            text-decoration: underline;
-        }
-        .table th {
-            background-color: #e9f5eb;
-        }
     </style>
 </head>
 <body>
@@ -52,25 +44,19 @@
         
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab">Handicaps</button>
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Handicaps</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="scores-tab" data-bs-toggle="tab" data-bs-target="#scores" type="button" role="tab">Scores</button>
+                <button class="nav-link" id="add-score-tab" data-bs-toggle="tab" data-bs-target="#add-score" type="button" role="tab" aria-controls="add-score" aria-selected="false">Add Score</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="players-tab" data-bs-toggle="tab" data-bs-target="#players" type="button" role="tab">Players</button>
+                <button class="nav-link" id="add-player-tab" data-bs-toggle="tab" data-bs-target="#add-player" type="button" role="tab" aria-controls="add-player" aria-selected="false">Add Player</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab">Courses</button>
+                <button class="nav-link" id="add-course-tab" data-bs-toggle="tab" data-bs-target="#add-course" type="button" role="tab" aria-controls="add-course" aria-selected="false">Add Course</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="add-score-tab" data-bs-toggle="tab" data-bs-target="#add-score" type="button" role="tab">Add Score</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="add-player-tab" data-bs-toggle="tab" data-bs-target="#add-player" type="button" role="tab">Add Player</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="add-course-tab" data-bs-toggle="tab" data-bs-target="#add-course" type="button" role="tab">Add Course</button>
+                <button class="nav-link" id="score-history-tab" data-bs-toggle="tab" data-bs-target="#score-history" type="button" role="tab" aria-controls="score-history" aria-selected="false">Score History</button>
             </li>
         </ul>
         
@@ -82,95 +68,6 @@
                     <div class="card-body">
                         <div id="handicap-container" class="row">
                             <p>Loading handicap data...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Scores Tab -->
-            <div class="tab-pane fade" id="scores" role="tabpanel" aria-labelledby="scores-tab">
-                <div class="card">
-                    <div class="card-header">Score History</div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="filterPlayer" class="form-label">Filter by Player</label>
-                            <select class="form-select" id="filterPlayer">
-                                <option value="">All Players</option>
-                            </select>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Player</th>
-                                        <th>Course</th>
-                                        <th>Score</th>
-                                        <th>Course Rating</th>
-                                        <th>Slope Rating</th>
-                                        <th>Differential</th>
-                                        <th>Used in Handicap</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="scores-table-body">
-                                    <tr>
-                                        <td colspan="8" class="text-center">Loading scores...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Players Tab -->
-            <div class="tab-pane fade" id="players" role="tabpanel" aria-labelledby="players-tab">
-                <div class="card">
-                    <div class="card-header">Player List</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Current Handicap</th>
-                                        <th>Total Rounds</th>
-                                        <th>View Scores</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="players-table-body">
-                                    <tr>
-                                        <td colspan="5" class="text-center">Loading players...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Courses Tab -->
-            <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
-                <div class="card">
-                    <div class="card-header">Course List</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Course Rating</th>
-                                        <th>Slope Rating</th>
-                                        <th>Times Played</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="courses-table-body">
-                                    <tr>
-                                        <td colspan="4" class="text-center">Loading courses...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -206,10 +103,6 @@
                                 <label for="adjustedGrossScore" class="form-label">Adjusted Gross Score</label>
                                 <input type="number" class="form-control" id="adjustedGrossScore" required>
                                 <div class="form-text">Maximum of Net Double Bogey per hole should be applied.</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="scoreDate" class="form-label">Date Played</label>
-                                <input type="date" class="form-control" id="scoreDate" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit Score</button>
                         </form>
@@ -265,22 +158,22 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Player Score Detail Modal -->
-    <div class="modal fade" id="playerScoreModal" tabindex="-1" aria-labelledby="playerScoreModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="playerScoreModalLabel">Player Scores</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="playerScoreDetail"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            
+            <!-- Score History Tab -->
+            <div class="tab-pane fade" id="score-history" role="tabpanel" aria-labelledby="score-history-tab">
+                <div class="card">
+                    <div class="card-header">Score History</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="historyPlayerSelect" class="form-label">Select Player</label>
+                            <select class="form-select" id="historyPlayerSelect">
+                                <option value="">Select Player</option>
+                            </select>
+                        </div>
+                        <div id="score-history-container">
+                            <p>Select a player to view their score history.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -296,11 +189,6 @@
             loadHandicaps();
             loadPlayers();
             loadCourses();
-            loadScores();
-            
-            // Set current date as default for score date input
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('scoreDate').value = today;
             
             // Set up form submission events
             document.getElementById('score-form').addEventListener('submit', submitScore);
@@ -319,9 +207,39 @@
                 }
             });
             
-            // Setup filter for scores
-            document.getElementById('filterPlayer').addEventListener('change', function() {
-                loadScores(this.value);
+            // Player history selection change handler
+            document.getElementById('historyPlayerSelect').addEventListener('change', function() {
+                const playerName = this.value;
+                if (playerName) {
+                    loadPlayerScoreHistory(playerName);
+                } else {
+                    document.getElementById('score-history-container').innerHTML = '<p>Select a player to view their score history.</p>';
+                }
+            });
+            
+            // Initialize Bootstrap tabs correctly
+            document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const tabTarget = document.querySelector(this.dataset.bsTarget);
+                    if (tabTarget) {
+                        // Hide all tab panes
+                        document.querySelectorAll('.tab-pane').forEach(pane => {
+                            pane.classList.remove('show', 'active');
+                        });
+                        
+                        // Deactivate all tabs
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            link.setAttribute('aria-selected', 'false');
+                        });
+                        
+                        // Activate selected tab and tab pane
+                        this.classList.add('active');
+                        this.setAttribute('aria-selected', 'true');
+                        tabTarget.classList.add('show', 'active');
+                    }
+                });
             });
         });
         
@@ -352,20 +270,8 @@
                             handicap.className = 'card-text handicap-display';
                             handicap.textContent = player.handicap === 'NH' ? 'No Handicap Yet' : player.handicap;
                             
-                            const viewScores = document.createElement('a');
-                            viewScores.className = 'btn btn-sm btn-outline-primary mt-2';
-                            viewScores.href = '#scores';
-                            viewScores.setAttribute('data-bs-toggle', 'tab');
-                            viewScores.textContent = 'View Scores';
-                            viewScores.addEventListener('click', function() {
-                                document.getElementById('filterPlayer').value = player.name;
-                                loadScores(player.name);
-                                document.getElementById('scores-tab').click();
-                            });
-                            
                             body.appendChild(name);
                             body.appendChild(handicap);
-                            body.appendChild(viewScores);
                             card.appendChild(body);
                             col.appendChild(card);
                             container.appendChild(col);
@@ -380,90 +286,38 @@
                 });
         }
         
-        // Load players for dropdown and player list tab
+        // Load players for dropdown
         function loadPlayers() {
             fetch(`${API_URL}?action=getPlayers`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
                         const playerSelect = document.getElementById('playerSelect');
-                        const filterPlayer = document.getElementById('filterPlayer');
+                        const historyPlayerSelect = document.getElementById('historyPlayerSelect');
                         
                         // Clear existing options except first
                         while (playerSelect.options.length > 1) {
                             playerSelect.remove(1);
                         }
                         
-                        // Clear filter options except first
-                        while (filterPlayer.options.length > 1) {
-                            filterPlayer.remove(1);
+                        while (historyPlayerSelect.options.length > 1) {
+                            historyPlayerSelect.remove(1);
                         }
                         
                         // Add players to dropdowns
                         data.data.forEach(player => {
-                            // Add to score entry dropdown
+                            // Add to score form dropdown
                             const option = document.createElement('option');
                             option.value = player.Name;
                             option.textContent = player.Name;
                             playerSelect.appendChild(option);
                             
-                            // Add to filter dropdown
-                            const filterOption = document.createElement('option');
-                            filterOption.value = player.Name;
-                            filterOption.textContent = player.Name;
-                            filterPlayer.appendChild(filterOption);
+                            // Add to history dropdown
+                            const historyOption = document.createElement('option');
+                            historyOption.value = player.Name;
+                            historyOption.textContent = player.Name;
+                            historyPlayerSelect.appendChild(historyOption);
                         });
-                        
-                        // Populate player list table
-                        const playersTable = document.getElementById('players-table-body');
-                        playersTable.innerHTML = '';
-                        
-                        if (data.data.length === 0) {
-                            const row = document.createElement('tr');
-                            const cell = document.createElement('td');
-                            cell.colSpan = 5;
-                            cell.textContent = 'No players found';
-                            cell.className = 'text-center';
-                            row.appendChild(cell);
-                            playersTable.appendChild(row);
-                        } else {
-                            data.data.forEach(player => {
-                                const row = document.createElement('tr');
-                                
-                                const nameCell = document.createElement('td');
-                                nameCell.textContent = player.Name;
-                                
-                                const emailCell = document.createElement('td');
-                                emailCell.textContent = player.Email;
-                                
-                                const handicapCell = document.createElement('td');
-                                handicapCell.textContent = player.Handicap || 'NH';
-                                
-                                const roundsCell = document.createElement('td');
-                                roundsCell.textContent = player.TotalRounds || 0;
-                                
-                                const viewScoresCell = document.createElement('td');
-                                const viewScoresLink = document.createElement('a');
-                                viewScoresLink.className = 'score-detail';
-                                viewScoresLink.textContent = 'View Scores';
-                                viewScoresLink.href = '#';
-                                viewScoresLink.addEventListener('click', function(e) {
-                                    e.preventDefault();
-                                    document.getElementById('filterPlayer').value = player.Name;
-                                    loadScores(player.Name);
-                                    document.getElementById('scores-tab').click();
-                                });
-                                viewScoresCell.appendChild(viewScoresLink);
-                                
-                                row.appendChild(nameCell);
-                                row.appendChild(emailCell);
-                                row.appendChild(handicapCell);
-                                row.appendChild(roundsCell);
-                                row.appendChild(viewScoresCell);
-                                
-                                playersTable.appendChild(row);
-                            });
-                        }
                     } else {
                         alert('Error loading players: ' + data.message);
                     }
@@ -474,7 +328,7 @@
                 });
         }
         
-        // Load courses for dropdown and course list tab
+        // Load courses for dropdown
         function loadCourses() {
             fetch(`${API_URL}?action=getCourses`)
                 .then(response => response.json())
@@ -495,43 +349,6 @@
                             option.dataset.course = JSON.stringify(course);
                             courseSelect.appendChild(option);
                         });
-                        
-                        // Populate course list table
-                        const coursesTable = document.getElementById('courses-table-body');
-                        coursesTable.innerHTML = '';
-                        
-                        if (data.data.length === 0) {
-                            const row = document.createElement('tr');
-                            const cell = document.createElement('td');
-                            cell.colSpan = 4;
-                            cell.textContent = 'No courses found';
-                            cell.className = 'text-center';
-                            row.appendChild(cell);
-                            coursesTable.appendChild(row);
-                        } else {
-                            data.data.forEach(course => {
-                                const row = document.createElement('tr');
-                                
-                                const nameCell = document.createElement('td');
-                                nameCell.textContent = course.Name;
-                                
-                                const ratingCell = document.createElement('td');
-                                ratingCell.textContent = course.CourseRating;
-                                
-                                const slopeCell = document.createElement('td');
-                                slopeCell.textContent = course.SlopeRating;
-                                
-                                const playsCell = document.createElement('td');
-                                playsCell.textContent = course.TimesPlayed || 0;
-                                
-                                row.appendChild(nameCell);
-                                row.appendChild(ratingCell);
-                                row.appendChild(slopeCell);
-                                row.appendChild(playsCell);
-                                
-                                coursesTable.appendChild(row);
-                            });
-                        }
                     } else {
                         alert('Error loading courses: ' + data.message);
                     }
@@ -542,77 +359,90 @@
                 });
         }
         
-        // Load scores history with optional player filter
-        function loadScores(playerName = '') {
-            const url = playerName ? 
-                `${API_URL}?action=getScores&player=${encodeURIComponent(playerName)}` : 
-                `${API_URL}?action=getScores`;
-                
-            fetch(url)
+        // Load player score history
+        function loadPlayerScoreHistory(playerName) {
+            fetch(`${API_URL}?action=getPlayerScores&playerName=${encodeURIComponent(playerName)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        const scoresTable = document.getElementById('scores-table-body');
-                        scoresTable.innerHTML = '';
+                        const container = document.getElementById('score-history-container');
                         
                         if (data.data.length === 0) {
-                            const row = document.createElement('tr');
-                            const cell = document.createElement('td');
-                            cell.colSpan = 8;
-                            cell.textContent = 'No scores found';
-                            cell.className = 'text-center';
-                            row.appendChild(cell);
-                            scoresTable.appendChild(row);
-                        } else {
-                            data.data.forEach(score => {
-                                const row = document.createElement('tr');
-                                if (score.UsedInHandicap) {
-                                    row.className = 'table-success';
-                                }
-                                
-                                const dateCell = document.createElement('td');
-                                dateCell.textContent = new Date(score.Date).toLocaleDateString();
-                                
-                                const playerCell = document.createElement('td');
-                                playerCell.textContent = score.PlayerName;
-                                
-                                const courseCell = document.createElement('td');
-                                courseCell.textContent = score.CourseName;
-                                
-                                const scoreCell = document.createElement('td');
-                                scoreCell.textContent = score.AdjustedGrossScore;
-                                
-                                const courseRatingCell = document.createElement('td');
-                                courseRatingCell.textContent = score.CourseRating;
-                                
-                                const slopeRatingCell = document.createElement('td');
-                                slopeRatingCell.textContent = score.SlopeRating;
-                                
-                                const differentialCell = document.createElement('td');
-                                differentialCell.textContent = score.ScoreDifferential ? score.ScoreDifferential.toFixed(1) : 'N/A';
-                                
-                                const usedCell = document.createElement('td');
-                                usedCell.textContent = score.UsedInHandicap ? 'Yes' : 'No';
-                                
-                                row.appendChild(dateCell);
-                                row.appendChild(playerCell);
-                                row.appendChild(courseCell);
-                                row.appendChild(scoreCell);
-                                row.appendChild(courseRatingCell);
-                                row.appendChild(slopeRatingCell);
-                                row.appendChild(differentialCell);
-                                row.appendChild(usedCell);
-                                
-                                scoresTable.appendChild(row);
-                            });
+                            container.innerHTML = '<p>No scores found for this player.</p>';
+                            return;
                         }
+                        
+                        // Create table
+                        const table = document.createElement('table');
+                        table.className = 'table table-striped';
+                        
+                        // Create table header
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        
+                        const headers = ['Date', 'Course', 'Score', 'Course Rating', 'Slope Rating', 'Differential'];
+                        headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.textContent = headerText;
+                            headerRow.appendChild(th);
+                        });
+                        
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+                        
+                        // Create table body
+                        const tbody = document.createElement('tbody');
+                        
+                        data.data.forEach(score => {
+                            const row = document.createElement('tr');
+                            
+                            // Format date
+                            const dateCell = document.createElement('td');
+                            const scoreDate = new Date(score.Date);
+                            dateCell.textContent = scoreDate.toLocaleDateString();
+                            row.appendChild(dateCell);
+                            
+                            // Course name
+                            const courseCell = document.createElement('td');
+                            courseCell.textContent = score.CourseName;
+                            row.appendChild(courseCell);
+                            
+                            // Score
+                            const scoreCell = document.createElement('td');
+                            scoreCell.textContent = score.AdjustedGrossScore;
+                            row.appendChild(scoreCell);
+                            
+                            // Course Rating
+                            const ratingCell = document.createElement('td');
+                            ratingCell.textContent = score.CourseRating;
+                            row.appendChild(ratingCell);
+                            
+                            // Slope Rating
+                            const slopeCell = document.createElement('td');
+                            slopeCell.textContent = score.SlopeRating;
+                            row.appendChild(slopeCell);
+                            
+                            // Differential
+                            const diffCell = document.createElement('td');
+                            diffCell.textContent = score.Differential ? score.Differential.toFixed(1) : 'N/A';
+                            row.appendChild(diffCell);
+                            
+                            tbody.appendChild(row);
+                        });
+                        
+                        table.appendChild(tbody);
+                        
+                        // Clear container and add table
+                        container.innerHTML = '';
+                        container.appendChild(table);
+                        
                     } else {
-                        alert('Error loading scores: ' + data.message);
+                        alert('Error loading score history: ' + data.message);
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Failed to load scores. Please try again later.');
+                    alert('Failed to load score history. Please try again later.');
                 });
         }
         
@@ -626,8 +456,7 @@
                 courseName: document.getElementById('courseSelect').value,
                 courseRating: parseFloat(document.getElementById('courseRating').value),
                 slopeRating: parseInt(document.getElementById('slopeRating').value),
-                adjustedGrossScore: parseInt(document.getElementById('adjustedGrossScore').value),
-                datePlayed: document.getElementById('scoreDate').value
+                adjustedGrossScore: parseInt(document.getElementById('adjustedGrossScore').value)
             };
             
             fetch(API_URL, {
@@ -639,16 +468,7 @@
                     if (data.status === 'success') {
                         alert('Score added successfully!');
                         document.getElementById('score-form').reset();
-                        
-                        // Reset date to today
-                        const today = new Date().toISOString().split('T')[0];
-                        document.getElementById('scoreDate').value = today;
-                        
-                        // Reload data
                         loadHandicaps();
-                        loadScores();
-                        loadPlayers();
-                        loadCourses();
                     } else {
                         alert('Error adding score: ' + data.message);
                     }

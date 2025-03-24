@@ -58,6 +58,15 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="score-history-tab" data-bs-toggle="tab" data-bs-target="#score-history" type="button" role="tab" aria-controls="score-history" aria-selected="false">Score History</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="all-scores-tab" data-bs-toggle="tab" data-bs-target="#all-scores" type="button" role="tab" aria-controls="all-scores" aria-selected="false">All Scores</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="all-players-tab" data-bs-toggle="tab" data-bs-target="#all-players" type="button" role="tab" aria-controls="all-players" aria-selected="false">All Players</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="all-courses-tab" data-bs-toggle="tab" data-bs-target="#all-courses" type="button" role="tab" aria-controls="all-courses" aria-selected="false">All Courses</button>
+            </li>
         </ul>
         
         <div class="tab-content" id="myTabContent">
@@ -176,6 +185,42 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- All Scores Tab -->
+            <div class="tab-pane fade" id="all-scores" role="tabpanel" aria-labelledby="all-scores-tab">
+                <div class="card">
+                    <div class="card-header">All Scores</div>
+                    <div class="card-body">
+                        <div id="all-scores-container">
+                            <p>Loading all scores...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Players Tab -->
+            <div class="tab-pane fade" id="all-players" role="tabpanel" aria-labelledby="all-players-tab">
+                <div class="card">
+                    <div class="card-header">All Players</div>
+                    <div class="card-body">
+                        <div id="all-players-container">
+                            <p>Loading all players...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Courses Tab -->
+            <div class="tab-pane fade" id="all-courses" role="tabpanel" aria-labelledby="all-courses-tab">
+                <div class="card">
+                    <div class="card-header">All Courses</div>
+                    <div class="card-body">
+                        <div id="all-courses-container">
+                            <p>Loading all courses...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -216,6 +261,11 @@
                     document.getElementById('score-history-container').innerHTML = '<p>Select a player to view their score history.</p>';
                 }
             });
+            
+            // Load all data for specific tabs when they are clicked
+            document.getElementById('all-scores-tab').addEventListener('click', loadAllScores);
+            document.getElementById('all-players-tab').addEventListener('click', loadAllPlayers);
+            document.getElementById('all-courses-tab').addEventListener('click', loadAllCourses);
             
             // Initialize Bootstrap tabs correctly
             document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tab => {
@@ -446,6 +496,240 @@
                 });
         }
         
+        // Load all scores
+        function loadAllScores() {
+            fetch(`${API_URL}?action=getAllScores`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const container = document.getElementById('all-scores-container');
+                        
+                        if (data.data.length === 0) {
+                            container.innerHTML = '<p>No scores found.</p>';
+                            return;
+                        }
+                        
+                        // Create table
+                        const table = document.createElement('table');
+                        table.className = 'table table-striped';
+                        
+                        // Create table header
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        
+                        const headers = ['Date', 'Player', 'Course', 'Score', 'Course Rating', 'Slope Rating', 'Differential'];
+                        headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.textContent = headerText;
+                            headerRow.appendChild(th);
+                        });
+                        
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+                        
+                        // Create table body
+                        const tbody = document.createElement('tbody');
+                        
+                        data.data.forEach(score => {
+                            const row = document.createElement('tr');
+                            
+                            // Format date
+                            const dateCell = document.createElement('td');
+                            const scoreDate = new Date(score.Date);
+                            dateCell.textContent = scoreDate.toLocaleDateString();
+                            row.appendChild(dateCell);
+                            
+                            // Player name
+                            const playerCell = document.createElement('td');
+                            playerCell.textContent = score.PlayerName;
+                            row.appendChild(playerCell);
+                            
+                            // Course name
+                            const courseCell = document.createElement('td');
+                            courseCell.textContent = score.CourseName;
+                            row.appendChild(courseCell);
+                            
+                            // Score
+                            const scoreCell = document.createElement('td');
+                            scoreCell.textContent = score.AdjustedGrossScore;
+                            row.appendChild(scoreCell);
+                            
+                            // Course Rating
+                            const ratingCell = document.createElement('td');
+                            ratingCell.textContent = score.CourseRating;
+                            row.appendChild(ratingCell);
+                            
+                            // Slope Rating
+                            const slopeCell = document.createElement('td');
+                            slopeCell.textContent = score.SlopeRating;
+                            row.appendChild(slopeCell);
+                            
+                            // Differential
+                            const diffCell = document.createElement('td');
+                            diffCell.textContent = score.Differential ? score.Differential.toFixed(1) : 'N/A';
+                            row.appendChild(diffCell);
+                            
+                            tbody.appendChild(row);
+                        });
+                        
+                        table.appendChild(tbody);
+                        
+                        // Clear container and add table
+                        container.innerHTML = '';
+                        container.appendChild(table);
+                        
+                    } else {
+                        alert('Error loading all scores: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load all scores. Please try again later.');
+                });
+        }
+        
+        // Load all players
+        function loadAllPlayers() {
+            fetch(`${API_URL}?action=getPlayers`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const container = document.getElementById('all-players-container');
+                        
+                        if (data.data.length === 0) {
+                            container.innerHTML = '<p>No players found.</p>';
+                            return;
+                        }
+                        
+                        // Create table
+                        const table = document.createElement('table');
+                        table.className = 'table table-striped';
+                        
+                        // Create table header
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        
+                        const headers = ['Name', 'Email', 'Handicap'];
+                        headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.textContent = headerText;
+                            headerRow.appendChild(th);
+                        });
+                        
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+                        
+                        // Create table body
+                        const tbody = document.createElement('tbody');
+                        
+                        data.data.forEach(player => {
+                            const row = document.createElement('tr');
+                            
+                            // Name
+                            const nameCell = document.createElement('td');
+                            nameCell.textContent = player.Name;
+                            row.appendChild(nameCell);
+                            
+                            // Email
+                            const emailCell = document.createElement('td');
+                            emailCell.textContent = player.Email;
+                            row.appendChild(emailCell);
+                            
+                            // Handicap
+                            const handicapCell = document.createElement('td');
+                            handicapCell.textContent = player.Handicap === 'NH' ? 'No Handicap Yet' : player.Handicap;
+                            row.appendChild(handicapCell);
+                            
+                            tbody.appendChild(row);
+                        });
+                        
+                        table.appendChild(tbody);
+                        
+                        // Clear container and add table
+                        container.innerHTML = '';
+                        container.appendChild(table);
+                        
+                    } else {
+                        alert('Error loading all players: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load all players. Please try again later.');
+                });
+        }
+        
+        // Load all courses
+        function loadAllCourses() {
+            fetch(`${API_URL}?action=getCourses`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const container = document.getElementById('all-courses-container');
+                        
+                        if (data.data.length === 0) {
+                            container.innerHTML = '<p>No courses found.</p>';
+                            return;
+                        }
+                        
+                        // Create table
+                        const table = document.createElement('table');
+                        table.className = 'table table-striped';
+                        
+                        // Create table header
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        
+                        const headers = ['Name', 'Course Rating', 'Slope Rating'];
+                        headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.textContent = headerText;
+                            headerRow.appendChild(th);
+                        });
+                        
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+                        
+                        // Create table body
+                        const tbody = document.createElement('tbody');
+                        
+                        data.data.forEach(course => {
+                            const row = document.createElement('tr');
+                            
+                            // Name
+                            const nameCell = document.createElement('td');
+                            nameCell.textContent = course.Name;
+                            row.appendChild(nameCell);
+                            
+                            // Course Rating
+                            const ratingCell = document.createElement('td');
+                            ratingCell.textContent = course.CourseRating;
+                            row.appendChild(ratingCell);
+                            
+                            // Slope Rating
+                            const slopeCell = document.createElement('td');
+                            slopeCell.textContent = course.SlopeRating;
+                            row.appendChild(slopeCell);
+                            
+                            tbody.appendChild(row);
+                        });
+                        
+                        table.appendChild(tbody);
+                        
+                        // Clear container and add table
+                        container.innerHTML = '';
+                        container.appendChild(table);
+                        
+                    } else {
+                        alert('Error loading all courses: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to load all courses. Please try again later.');
+                });
+        }
+        
         // Submit a new score
         function submitScore(e) {
             e.preventDefault();
@@ -465,82 +749,4 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'success') {
-                        alert('Score added successfully!');
-                        document.getElementById('score-form').reset();
-                        loadHandicaps();
-                    } else {
-                        alert('Error adding score: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to add score. Please try again later.');
-                });
-        }
-        
-        // Add a new player
-        function addPlayer(e) {
-            e.preventDefault();
-            
-            const playerData = {
-                action: 'addPlayer',
-                name: document.getElementById('playerName').value,
-                email: document.getElementById('playerEmail').value,
-                initialHandicap: document.getElementById('initialHandicap').value || null
-            };
-            
-            fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(playerData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert('Player added successfully!');
-                        document.getElementById('player-form').reset();
-                        loadPlayers();
-                        loadHandicaps();
-                    } else {
-                        alert('Error adding player: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to add player. Please try again later.');
-                });
-        }
-        
-        // Add a new course
-        function addCourse(e) {
-            e.preventDefault();
-            
-            const courseData = {
-                action: 'addCourse',
-                name: document.getElementById('courseName').value,
-                courseRating: parseFloat(document.getElementById('newCourseRating').value),
-                slopeRating: parseInt(document.getElementById('newSlopeRating').value)
-            };
-            
-            fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(courseData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert('Course added successfully!');
-                        document.getElementById('course-form').reset();
-                        loadCourses();
-                    } else {
-                        alert('Error adding course: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to add course. Please try again later.');
-                });
-        }
-    </script>
-</body>
-</html>
+                    if (data.status ===
